@@ -4,6 +4,13 @@ import cors from "cors";
 import postRouter from "./apps/posts.js";
 import { client } from "./utils/db.js";
 
+import dotenv from "dotenv"
+dotenv.config()
+
+//import authRouter มาใช้ 
+import authRouter from "./apps/auth.js";
+
+
 async function init() {
   const app = express();
   const port = 4000;
@@ -13,6 +20,10 @@ async function init() {
   app.use(cors());
   app.use(bodyParser.json());
   app.use("/posts", postRouter);
+
+  //แล้วก็เรียกใช้
+  app.use(express.json())
+  app.use("/auth", authRouter)
 
   app.get("/", (req, res) => {
     res.send("Hello World!");
